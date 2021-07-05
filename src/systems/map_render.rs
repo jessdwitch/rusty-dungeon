@@ -8,8 +8,8 @@ pub fn map_render(
     let mut draw_batch = DrawBatch::new();
     draw_batch.target(DRAW_CONSOLE_MAP);
     let offset = Point::new(camera.left_x, camera.top_y);
-    for y in camera.top_y..camera.bottom_y {
-        for x in camera.left_x..camera.right_x {
+    for y in camera.top_y..=camera.bottom_y {
+        for x in camera.left_x..=camera.right_x {
             let pt = Point::new(x,y);
             if !map.in_bounds(pt) {
                 continue;
