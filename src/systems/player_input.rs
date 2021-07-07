@@ -1,14 +1,13 @@
 use crate::prelude::*;
 
 #[system]
-#[write_component(Point)]
+#[read_component(Point)]
 #[read_component(Player)]
 pub fn player_input(
-    ecs: &mut SubWorld,
-    #[resource] map: &Map,
     #[resource] key: &Option<VirtualKeyCode>,
-    #[resource] camera: &mut Camera,
     #[resource] turn_state: &mut TurnState,
+    ecs: &mut SubWorld,
+    commands: &mut CommandBuffer,
 ) {
     if let Some(key) = key {
         let delta = match key {
@@ -19,14 +18,11 @@ pub fn player_input(
             VirtualKeyCode::Space => Point::new(0, 0),
             _ => return,
         };
-        let mut players = <&mut Point>::query().filter(component::<Player>());
-        players.iter_mut(ecs).for_each(|pos| {
+        let mut players = <(&Point, Entity)>::query().filter(component::<Player>());
+        players.iter(ecs).for_each(|(pos, entity)| {
             let destination = *pos + delta;
-            if map.can_enter_tile(destination) {
-                *pos = destination;
-                camera.on_player_move(destination);
-                *turn_state = TurnState::PlayerTurn;
-            }
+            commands.push(((), WantsToMove{ entity: *entity, destination}));
         });
+        *turn_state = TurnState::PlayerTurn;
     }
 }

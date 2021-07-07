@@ -21,4 +21,12 @@
 		"prefix": "sc",
 		"body": "#[${1|read,write|}_component($2)]"
 	},
+	"Component struct": {
+		"scope": "rust",
+		"prefix": "comp",
+		"body": [
+			"#[derive(Clone, Copy, Debug, PartialEq)]",
+			"pub struct $1${2|;, {\n\n}|}"
+		]
+	}
 }
