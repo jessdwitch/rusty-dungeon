@@ -15,11 +15,27 @@
 	// 	],
 	// 	"description": "Log output to console"
 	// }
-
+	"System function": {
+		"scope": "rust",
+		"prefix": "sys",
+		"body": [
+			"#[system]",
+			"pub fn $1 (",
+			"${2:\tecs: &SubWorld,}",
+			") {",
+			"\t$0",
+			"}"
+		]
+	},
 	"System component": {
 		"scope": "rust",
 		"prefix": "sc",
 		"body": "#[${1|read,write|}_component($2)]"
+	},
+	"System resource": {
+		"scope": "rust",
+		"prefix": "res",
+		"body": "#[resource] $1: &$2,"
 	},
 	"Component struct": {
 		"scope": "rust",
