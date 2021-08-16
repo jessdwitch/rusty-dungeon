@@ -44,5 +44,10 @@
 			"#[derive(Clone, Copy, Debug, PartialEq)]",
 			"pub struct $1${2|;, {\n\n}|}"
 		]
+	},
+	"Prelude": {
+		"scope": "rust",
+		"prefix": "usep",
+		"body": "use crate::prelude::*;"
 	}
 }
